@@ -1,0 +1,5 @@
+.env
+sync_state.json
+sync.log*
+__pycache__/
+*.sql.tmp

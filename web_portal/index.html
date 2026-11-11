@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>제1회 서울특별시협회장배 초등부 플로어볼 대회 · 경기 결과 및 순위 안내</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --gold: #facc15;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 56px;
+    }
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 18px 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .page-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .page-meta {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 860px) {
+      .grid-2col { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .card-title {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      font-weight: 800;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-sub {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    th {
+      background: #0b1120;
+      color: #cbd5e1;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    @media (max-width: 640px) {
+      th, td {
+        padding: 6px 8px;
+        font-size: 12px;
+      }
+      #playersContainer th:nth-child(5),
+      #playersContainer td:nth-child(5),
+      #playersContainer th:nth-child(9),
+      #playersContainer td:nth-child(9),
+      .hide-on-mobile {
+        display: none;
+      }
+    }
+    tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.45);
+    }
+    tr.rank-1 td {
+      background: rgba(250, 204, 21, 0.12);
+    }
+    .pts-cell {
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .school-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 14px;
+    }
+    .school-box {
+      background: #0b1120;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .school-box h3 {
+      margin: 0 0 8px 0;
+      font-size: 14.5px;
+      color: var(--accent);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+  <script src="./config.js"></script>
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <div>
+        <h1 class="page-title">🏑 제1회 서울특별시협회장배 초등부 플로어볼 대회</h1>
+        <div class="page-meta" id="dataSourceStatus">데이터 불러오는 중...</div>
+      </div>
+      <div class="page-meta" id="refreshTimerInfo">60초 자동 새로고침 (탭 활성 시)</div>
+    </header>
+
+    <div class="grid-2col">
+      <section class="card" aria-labelledby="standingsHeading">
+        <h2 class="card-title" id="standingsHeading">
+          <span>🏅 학교별 승무패 순위</span>
+          <span class="card-sub">승 3 · 무 1 · 패 0 → 골득실 → 다득점</span>
+        </h2>
+        <div class="table-wrap" id="standingsContainer"></div>
+      </section>
+
+      <section class="card" aria-labelledby="playersHeading">
+        <h2 class="card-title" id="playersHeading">
+          <span>⚡ 개인 포인트(G+A) 순위</span>
+          <span class="card-sub">포인트(G+A) → 다득점 → 어시스트</span>
+        </h2>
+        <div class="table-wrap" id="playersContainer"></div>
+      </section>
+    </div>
+
+    <section class="card" aria-labelledby="matchesHeading">
+      <h2 class="card-title" id="matchesHeading">
+        <span>📅 경기 결과 목록</span>
+        <span class="card-sub" id="matchesCountLabel">총 0경기</span>
+      </h2>
+      <div class="table-wrap" id="matchesContainer"></div>
+    </section>
+
+    <section class="card" aria-labelledby="rostersHeading">
+      <h2 class="card-title" id="rostersHeading">
+        <span>🏫 학교별 선수 명단</span>
+        <span class="card-sub">등번호 · 이름 · 학교 · 경기 기록</span>
+      </h2>
+      <div class="school-grid" id="rostersContainer"></div>
+    </section>
+    <p class="page-meta">Copyright © 2026 김인홍. All rights reserved.</p>
+  </main>
+
+  <script>
+    const FALLBACK_SAMPLE_MATCHES = [
+      {
+        "schemaVersion": 1,
+        "matchId": "match_20261109_100000_m01",
+        "playedAt": "2026-11-09T10:00:00+09:00",
+        "period": 2,
+        "homeSchool": "서울초",
+        "awaySchool": "경기초",
+        "homeScore": 3,
+        "awayScore": 1,
+        "home": {
+          "school": "서울초",
+          "score": 3,
+          "players": [
+            { "number": "10", "name": "김민준", "school": "서울초", "goals": 2, "assists": 1, "penalties": 0 },
+            { "number": "7", "name": "이서준", "school": "서울초", "goals": 1, "assists": 2, "penalties": 1 },
+            { "number": "1", "name": "박지호", "school": "서울초", "goals": 0, "assists": 0, "penalties": 0 }
+          ]
+        },
+        "away": {
+          "school": "경기초",
+          "score": 1,
+          "players": [
+            { "number": "9", "name": "박도윤", "school": "경기초", "goals": 1, "assists": 0, "penalties": 0 },
+            { "number": "11", "name": "최예준", "school": "경기초", "goals": 0, "assists": 1, "penalties": 1 },
+            { "number": "4", "name": "정시우", "school": "경기초", "goals": 0, "assists": 0, "penalties": 0 }
+          ]
+        }
+      },
+      {
+        "schemaVersion": 1,
+        "matchId": "match_20261109_110000_m02",
+        "playedAt": "2026-11-09T11:00:00+09:00",
+        "period": 2,
+        "homeSchool": "인천초",
+        "awaySchool": "서울초",
+        "homeScore": 2,
+        "awayScore": 2,
+        "home": {
+          "school": "인천초",
+          "score": 2,
+          "players": [
+            { "number": "8", "name": "강하준", "school": "인천초", "goals": 2, "assists": 0, "penalties": 0 },
+            { "number": "5", "name": "조은우", "school": "인천초", "goals": 0, "assists": 2, "penalties": 0 }
+          ]
+        },
+        "away": {
+          "school": "서울초",
+          "score": 2,
+          "players": [
+            { "number": "10", "name": "김민준", "school": "서울초", "goals": 1, "assists": 1, "penalties": 0 },
+            { "number": "7", "name": "이서준", "school": "서울초", "goals": 1, "assists": 0, "penalties": 0 },
+            { "number": "1", "name": "박지호", "school": "서울초", "goals": 0, "assists": 0, "penalties": 0 }
+          ]
+        }
+      },
+      {
+        "schemaVersion": 1,
+        "matchId": "match_20261109_120000_m03",
+        "playedAt": "2026-11-09T12:00:00+09:00",
+        "period": 2,
+        "homeSchool": "경기초",
+        "awaySchool": "인천초",
+        "homeScore": 1,
+        "awayScore": 4,
+        "home": {
+          "school": "경기초",
+          "score": 1,
+          "players": [
+            { "number": "9", "name": "박도윤", "school": "경기초", "goals": 1, "assists": 0, "penalties": 1 },
+            { "number": "11", "name": "최예준", "school": "경기초", "goals": 0, "assists": 1, "penalties": 0 },
+            { "number": "4", "name": "정시우", "school": "경기초", "goals": 0, "assists": 0, "penalties": 0 }
+          ]
+        },
+        "away": {
+          "school": "인천초",
+          "score": 4,
+          "players": [
+            { "number": "8", "name": "강하준", "school": "인천초", "goals": 2, "assists": 1, "penalties": 0 },
+            { "number": "5", "name": "조은우", "school": "인천초", "goals": 1, "assists": 2, "penalties": 0 },
+            { "number": "12", "name": "윤건우", "school": "인천초", "goals": 1, "assists": 0, "penalties": 1 }
+          ]
+        }
+      }
+    ];
+
+    function esc(v) {
+      return String(v ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // 1. 학교별 승무패 순위 계산 (승3·무1·패0 → 골득실 → 다득점)
+    function computeStandings(matches) {
+      const map = {};
+      const getSchoolRow = (name) => {
+        const s = String(name || '').trim();
+        if (!s) return null;
+        if (!map[s]) {
+          map[s] = { school: s, gp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+        }
+        return map[s];
+      };
+
+      matches.forEach(m => {
+        const homeName = m.home?.school || m.homeSchool;
+        const awayName = m.away?.school || m.awaySchool;
+        const hs = Number(m.home?.score ?? m.homeScore);
+        const as = Number(m.away?.score ?? m.awayScore);
+        if (!homeName || !awayName || isNaN(hs) || isNaN(as)) return;
+
+        const h = getSchoolRow(homeName);
+        const a = getSchoolRow(awayName);
+        h.gp += 1;
+        a.gp += 1;
+        h.gf += hs;
+        h.ga += as;
+        a.gf += as;
+        a.ga += hs;
+
+        if (hs > as) {
+          h.w += 1;
+          h.pts += 3;
+          a.l += 1;
+        } else if (hs < as) {
+          a.w += 1;
+          a.pts += 3;
+          h.l += 1;
+        } else {
+          h.d += 1;
+          a.d += 1;
+          h.pts += 1;
+          a.pts += 1;
+        }
+      });
+
+      const list = Object.values(map).map(r => ({ ...r, gd: r.gf - r.ga }));
+      list.sort((x, y) => {
+        if (y.pts !== x.pts) return y.pts - x.pts;
+        if (y.gd !== x.gd) return y.gd - x.gd;
+        if (y.gf !== x.gf) return y.gf - x.gf;
+        return x.school.localeCompare(y.school, 'ko');
+      });
+      return list.map((r, i) => ({ ...r, rank: i + 1 }));
+    }
+
+    // 2. 개인 포인트(G+A) 순위 및 학교별 선수 명단 계산 (이름, 등번호, 학교, 경기 기록만 사용)
+    function computePlayersAndRosters(matches) {
+      const playerMap = {};
+      const schoolRosters = {};
+
+      matches.forEach(m => {
+        ['home', 'away'].forEach(side => {
+          const teamObj = m[side] || {};
+          const schoolName = String(teamObj.school || m[`${side}School`] || '').trim();
+          if (!schoolName) return;
+          if (!schoolRosters[schoolName]) schoolRosters[schoolName] = {};
+
+          const players = Array.isArray(teamObj.players) ? teamObj.players : [];
+          players.forEach(p => {
+            const number = String(p.number ?? '').trim();
+            const name = String(p.name ?? '').trim();
+            const goals = Number(p.goals) || 0;
+            const assists = Number(p.assists) || 0;
+            const penalties = Number(p.penalties ?? p.penaltyCount) || 0;
+            if (!number && !name && goals === 0 && assists === 0 && penalties === 0) return;
+
+            const key = `${schoolName}__${number}__${name}`;
+            if (!playerMap[key]) {
+              playerMap[key] = {
+                school: schoolName,
+                number: number || '-',
+                name: name || '-',
+                gp: 0,
+                goals: 0,
+                assists: 0,
+                points: 0,
+                penalties: 0
+              };
+            }
+            const item = playerMap[key];
+            item.gp += 1;
+            item.goals += goals;
+            item.assists += assists;
+            item.points += (goals + assists);
+            item.penalties += penalties;
+
+            schoolRosters[schoolName][key] = item;
+          });
+        });
+      });
+
+      const playerList = Object.values(playerMap).filter(p => p.points > 0 || p.penalties > 0);
+      playerList.sort((x, y) => {
+        if (y.points !== x.points) return y.points - x.points;
+        if (y.goals !== x.goals) return y.goals - x.goals;
+        if (y.assists !== x.assists) return y.assists - x.assists;
+        return x.name.localeCompare(y.name, 'ko');
+      });
+
+      return {
+        rankedPlayers: playerList.map((p, i) => ({ ...p, rank: i + 1 })),
+        schoolRosters
+      };
+    }
+
+    function renderPortal(matches, sourceDesc) {
+      document.getElementById('dataSourceStatus').textContent = sourceDesc;
+      document.getElementById('matchesCountLabel').textContent = `총 ${matches.length}경기`;
+
+      const standings = computeStandings(matches);
+      const { rankedPlayers, schoolRosters } = computePlayersAndRosters(matches);
+
+      // 1) 학교별 승무패 순위 렌더링
+      const stEl = document.getElementById('standingsContainer');
+      if (standings.length === 0) {
+        stEl.innerHTML = '<div style="padding:18px;text-align:center;color:#94a3b8;">경기 데이터가 없습니다.</div>';
+      } else {
+        stEl.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>학교명</th>
+                <th>경기</th>
+                <th>승</th>
+                <th>무</th>
+                <th>패</th>
+                <th>득점</th>
+                <th>실점</th>
+                <th>골득실</th>
+                <th>승점</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${standings.map(s => `
+                <tr class="${s.rank === 1 ? 'rank-1' : ''}">
+                  <td><strong>${s.rank}</strong></td>
+                  <td><strong>${esc(s.school)}</strong></td>
+                  <td>${s.gp}</td>
+                  <td>${s.w}</td>
+                  <td>${s.d}</td>
+                  <td>${s.l}</td>
+                  <td>${s.gf}</td>
+                  <td>${s.ga}</td>
+                  <td>${s.gd > 0 ? '+' + s.gd : s.gd}</td>
+                  <td class="pts-cell">${s.pts}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      // 2) 개인 포인트(G+A) 순위 렌더링
+      const plEl = document.getElementById('playersContainer');
+      if (rankedPlayers.length === 0) {
+        plEl.innerHTML = '<div style="padding:18px;text-align:center;color:#94a3b8;">개인 포인트 기록이 없습니다.</div>';
+      } else {
+        plEl.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>학교</th>
+                <th>등번호</th>
+                <th>이름</th>
+                <th class="hide-on-mobile">경기</th>
+                <th>득점(G)</th>
+                <th>어시(A)</th>
+                <th>포인트(G+A)</th>
+                <th class="hide-on-mobile">퇴장</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rankedPlayers.map(p => `
+                <tr class="${p.rank === 1 ? 'rank-1' : ''}">
+                  <td><strong>${p.rank}</strong></td>
+                  <td>${esc(p.school)}</td>
+                  <td>#${esc(p.number)}</td>
+                  <td><strong>${esc(p.name)}</strong></td>
+                  <td class="hide-on-mobile">${p.gp}</td>
+                  <td>${p.goals}</td>
+                  <td>${p.assists}</td>
+                  <td class="pts-cell">${p.points}</td>
+                  <td class="hide-on-mobile">${p.penalties}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      // 3) 경기 결과 목록 렌더링
+      const maEl = document.getElementById('matchesContainer');
+      if (matches.length === 0) {
+        maEl.innerHTML = '<div style="padding:18px;text-align:center;color:#94a3b8;">등록된 경기 결과가 없습니다.</div>';
+      } else {
+        maEl.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>순번</th>
+                <th>일시</th>
+                <th>HOME 학교</th>
+                <th>점수</th>
+                <th>AWAY 학교</th>
+                <th>주요 경기 기록 (득점 · 어시스트)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${matches.map((m, idx) => {
+                const homeSchool = m.home?.school || m.homeSchool || 'HOME';
+                const awaySchool = m.away?.school || m.awaySchool || 'AWAY';
+                const hs = Number(m.home?.score ?? m.homeScore) || 0;
+                const as = Number(m.away?.score ?? m.awayScore) || 0;
+                const playedTime = m.playedAt ? String(m.playedAt).replace('T', ' ').slice(0, 16) : '-';
+                const summary = [];
+                ['home', 'away'].forEach(side => {
+                  const sName = m[side]?.school || m[`${side}School`] || '';
+                  (m[side]?.players || []).forEach(p => {
+                    const g = Number(p.goals) || 0;
+                    const a = Number(p.assists) || 0;
+                    if (g > 0 || a > 0) {
+                      summary.push(`${esc(sName)} #${esc(p.number)} ${esc(p.name)}(${g ? 'G' + g : ''}${a ? (g ? ' ' : '') + 'A' + a : ''})`);
+                    }
+                  });
+                });
+                return `
+                  <tr>
+                    <td>${idx + 1}</td>
+                    <td>${esc(playedTime)}</td>
+                    <td><strong>${esc(homeSchool)}</strong></td>
+                    <td><strong>${hs} : ${as}</strong></td>
+                    <td><strong>${esc(awaySchool)}</strong></td>
+                    <td style="text-align:left;">${summary.join(', ') || '-'}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      // 4) 학교별 선수 명단 렌더링
+      const roEl = document.getElementById('rostersContainer');
+      const schoolNames = Object.keys(schoolRosters).sort((a, b) => a.localeCompare(b, 'ko'));
+      if (schoolNames.length === 0) {
+        roEl.innerHTML = '<div style="padding:18px;color:#94a3b8;">등록된 선수 명단이 없습니다.</div>';
+      } else {
+        roEl.innerHTML = schoolNames.map(sName => {
+          const pList = Object.values(schoolRosters[sName]).sort((a, b) => (parseInt(a.number, 10) || 999) - (parseInt(b.number, 10) || 999));
+          return `
+            <div class="school-box">
+              <h3><span>🏫 ${esc(sName)}</span><span class="card-sub">${pList.length}명</span></h3>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>등번호</th>
+                      <th>이름</th>
+                      <th>득점</th>
+                      <th>어시</th>
+                      <th>포인트</th>
+                      <th>퇴장</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${pList.map(p => `
+                      <tr>
+                        <td>#${esc(p.number)}</td>
+                        <td><strong>${esc(p.name)}</strong></td>
+                        <td>${p.goals}</td>
+                        <td>${p.assists}</td>
+                        <td class="pts-cell">${p.points}</td>
+                        <td>${p.penalties}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    let cachedMatches = [];
+    let lastUpdatedAtCursor = null;
+
+    function resolveReadEndpoint() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('sample') === '1') return './sample_matches.json';
+
+      const raw = String(window.FLOORBALL_READ_URL || window.FLOORBALL_API_BASE_URL || '').trim();
+      if (!raw) return './sample_matches.json';
+
+      const clean = raw.replace(/\/+$/, '');
+      return clean.endsWith('/matches') ? clean : `${clean}/matches`;
+    }
+
+    function mergeMatches(existingList, incomingList) {
+      const map = new Map();
+      existingList.forEach(m => {
+        if (m && m.matchId) map.set(m.matchId, m);
+      });
+      incomingList.forEach(m => {
+        if (m && m.matchId) map.set(m.matchId, m);
+      });
+      return Array.from(map.values());
+    }
+
+    async function loadMatches() {
+      const baseEndpoint = resolveReadEndpoint();
+      const isSampleMode = baseEndpoint === './sample_matches.json';
+      const nowStr = new Date().toLocaleTimeString('ko-KR', { hour12: false });
+
+      let requestUrl = baseEndpoint;
+      if (!isSampleMode) {
+        const pageParams = new URLSearchParams(window.location.search);
+        const query = new URLSearchParams();
+        const tid = pageParams.get('tournamentId');
+        if (tid) query.set('tournamentId', tid);
+        if (lastUpdatedAtCursor) query.set('since', lastUpdatedAtCursor);
+        const qs = query.toString();
+        if (qs) requestUrl += (requestUrl.includes('?') ? '&' : '?') + qs;
+      }
+
+      try {
+        const res = await fetch(requestUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const incoming = Array.isArray(data) ? data : (Array.isArray(data?.matches) ? data.matches : []);
+
+        if (isSampleMode || !lastUpdatedAtCursor) {
+          cachedMatches = incoming;
+        } else if (incoming.length > 0) {
+          cachedMatches = mergeMatches(cachedMatches, incoming);
+        }
+
+        if (data && typeof data.lastUpdatedAt === 'string' && data.lastUpdatedAt) {
+          lastUpdatedAtCursor = data.lastUpdatedAt;
+        }
+
+        renderPortal(
+          cachedMatches,
+          `최근 조회: ${nowStr}${data?.lastUpdatedAt ? ` (서버 갱신: ${data.lastUpdatedAt})` : ''}`
+        );
+      } catch (err) {
+        if (isSampleMode) {
+          renderPortal(FALLBACK_SAMPLE_MATCHES, `최근 조회: ${nowStr} (sample_matches.json 로컬 샘플 3경기)`);
+        } else {
+          document.getElementById('dataSourceStatus').textContent = `데이터 조회 실패 (${nowStr}) - ${err.message}`;
+        }
+      }
+    }
+
+    // 60초 주기 새로고침 & 백그라운드 탭일 때 정지
+    let refreshIntervalId = null;
+
+    function startPolling() {
+      if (refreshIntervalId) clearInterval(refreshIntervalId);
+      refreshIntervalId = setInterval(() => {
+        if (!document.hidden) {
+          loadMatches();
+        }
+      }, 60000);
+    }
+
+    function stopPolling() {
+      if (refreshIntervalId) {
+        clearInterval(refreshIntervalId);
+        refreshIntervalId = null;
+      }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      const infoEl = document.getElementById('refreshTimerInfo');
+      if (document.hidden) {
+        stopPolling();
+        if (infoEl) infoEl.textContent = '자동 새로고침 일시정지됨 (백그라운드 탭)';
+      } else {
+        loadMatches();
+        startPolling();
+        if (infoEl) infoEl.textContent = '60초 자동 새로고침 (탭 활성 시)';
+      }
+    });
+
+    loadMatches();
+    if (!document.hidden) {
+      startPolling();
+    }
+  </script>
+</body>
+</html>

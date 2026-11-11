@@ -1,0 +1,104 @@
+[
+  {
+    "schemaVersion": 1,
+    "matchId": "match_20261109_100000_m01",
+    "playedAt": "2026-11-09T10:00:00+09:00",
+    "period": 2,
+    "homeSchool": "서울초",
+    "awaySchool": "경기초",
+    "homeScore": 3,
+    "awayScore": 1,
+    "home": {
+      "school": "서울초",
+      "score": 3,
+      "players": [
+        { "number": "10", "name": "김민준", "school": "서울초", "goals": 2, "assists": 1, "penalties": 0 },
+        { "number": "7", "name": "이서준", "school": "서울초", "goals": 1, "assists": 2, "penalties": 1 },
+        { "number": "1", "name": "박지호", "school": "서울초", "goals": 0, "assists": 0, "penalties": 0 }
+      ]
+    },
+    "away": {
+      "school": "경기초",
+      "score": 1,
+      "players": [
+        { "number": "9", "name": "박도윤", "school": "경기초", "goals": 1, "assists": 0, "penalties": 0 },
+        { "number": "11", "name": "최예준", "school": "경기초", "goals": 0, "assists": 1, "penalties": 1 },
+        { "number": "4", "name": "정시우", "school": "경기초", "goals": 0, "assists": 0, "penalties": 0 }
+      ]
+    },
+    "logs": [
+      { "period": "1P", "gameTime": "14:20", "category": "득점 (GOAL)", "team": "서울초", "detail": "득점: #10(김민준) / 어시스트: #7(이서준)", "homeScore": 1, "awayScore": 0 },
+      { "period": "1P", "gameTime": "10:05", "category": "득점 (GOAL)", "team": "경기초", "detail": "득점: #9(박도윤) / 어시스트: #11(최예준)", "homeScore": 1, "awayScore": 1 },
+      { "period": "2P", "gameTime": "05:12", "category": "득점 (GOAL)", "team": "서울초", "detail": "득점: #7(이서준) / 어시스트: #10(김민준)", "homeScore": 2, "awayScore": 1 },
+      { "period": "2P", "gameTime": "01:30", "category": "득점 (GOAL)", "team": "서울초", "detail": "득점: #10(김민준) / 어시스트: #7(이서준)", "homeScore": 3, "awayScore": 1 }
+    ]
+  },
+  {
+    "schemaVersion": 1,
+    "matchId": "match_20261109_110000_m02",
+    "playedAt": "2026-11-09T11:00:00+09:00",
+    "period": 2,
+    "homeSchool": "인천초",
+    "awaySchool": "서울초",
+    "homeScore": 2,
+    "awayScore": 2,
+    "home": {
+      "school": "인천초",
+      "score": 2,
+      "players": [
+        { "number": "8", "name": "강하준", "school": "인천초", "goals": 2, "assists": 0, "penalties": 0 },
+        { "number": "5", "name": "조은우", "school": "인천초", "goals": 0, "assists": 2, "penalties": 0 }
+      ]
+    },
+    "away": {
+      "school": "서울초",
+      "score": 2,
+      "players": [
+        { "number": "10", "name": "김민준", "school": "서울초", "goals": 1, "assists": 1, "penalties": 0 },
+        { "number": "7", "name": "이서준", "school": "서울초", "goals": 1, "assists": 0, "penalties": 0 },
+        { "number": "1", "name": "박지호", "school": "서울초", "goals": 0, "assists": 0, "penalties": 0 }
+      ]
+    },
+    "logs": [
+      { "period": "1P", "gameTime": "12:10", "category": "득점 (GOAL)", "team": "인천초", "detail": "득점: #8(강하준) / 어시스트: #5(조은우)", "homeScore": 1, "awayScore": 0 },
+      { "period": "1P", "gameTime": "04:40", "category": "득점 (GOAL)", "team": "서울초", "detail": "득점: #10(김민준) / 어시스트: 없음", "homeScore": 1, "awayScore": 1 },
+      { "period": "2P", "gameTime": "09:15", "category": "득점 (GOAL)", "team": "서울초", "detail": "득점: #7(이서준) / 어시스트: #10(김민준)", "homeScore": 1, "awayScore": 2 },
+      { "period": "2P", "gameTime": "02:05", "category": "득점 (GOAL)", "team": "인천초", "detail": "득점: #8(강하준) / 어시스트: #5(조은우)", "homeScore": 2, "awayScore": 2 }
+    ]
+  },
+  {
+    "schemaVersion": 1,
+    "matchId": "match_20261109_120000_m03",
+    "playedAt": "2026-11-09T12:00:00+09:00",
+    "period": 2,
+    "homeSchool": "경기초",
+    "awaySchool": "인천초",
+    "homeScore": 1,
+    "awayScore": 4,
+    "home": {
+      "school": "경기초",
+      "score": 1,
+      "players": [
+        { "number": "9", "name": "박도윤", "school": "경기초", "goals": 1, "assists": 0, "penalties": 1 },
+        { "number": "11", "name": "최예준", "school": "경기초", "goals": 0, "assists": 1, "penalties": 0 },
+        { "number": "4", "name": "정시우", "school": "경기초", "goals": 0, "assists": 0, "penalties": 0 }
+      ]
+    },
+    "away": {
+      "school": "인천초",
+      "score": 4,
+      "players": [
+        { "number": "8", "name": "강하준", "school": "인천초", "goals": 2, "assists": 1, "penalties": 0 },
+        { "number": "5", "name": "조은우", "school": "인천초", "goals": 1, "assists": 2, "penalties": 0 },
+        { "number": "12", "name": "윤건우", "school": "인천초", "goals": 1, "assists": 0, "penalties": 1 }
+      ]
+    },
+    "logs": [
+      { "period": "1P", "gameTime": "16:00", "category": "득점 (GOAL)", "team": "인천초", "detail": "득점: #8(강하준) / 어시스트: #5(조은우)", "homeScore": 0, "awayScore": 1 },
+      { "period": "1P", "gameTime": "08:30", "category": "득점 (GOAL)", "team": "경기초", "detail": "득점: #9(박도윤) / 어시스트: #11(최예준)", "homeScore": 1, "awayScore": 1 },
+      { "period": "2P", "gameTime": "11:20", "category": "득점 (GOAL)", "team": "인천초", "detail": "득점: #5(조은우) / 어시스트: #8(강하준)", "homeScore": 1, "awayScore": 2 },
+      { "period": "2P", "gameTime": "06:45", "category": "득점 (GOAL)", "team": "인천초", "detail": "득점: #8(강하준) / 어시스트: #5(조은우)", "homeScore": 1, "awayScore": 3 },
+      { "period": "2P", "gameTime": "01:10", "category": "득점 (GOAL)", "team": "인천초", "detail": "득점: #12(윤건우) / 어시스트: 없음", "homeScore": 1, "awayScore": 4 }
+    ]
+  }
+]
